@@ -1,0 +1,20 @@
+total 92
+-rw-r--r-- 1 aba aba   430 Sep  7 19:29 Makefile
+-rw-r--r-- 1 aba aba  2700 Sep  7 21:37 forks.c
+-rw-r--r-- 1 aba aba  3064 Sep  7 21:37 forks.o
+-rw-r--r-- 1 aba aba  1992 Sep  7 15:05 ft_split.c
+-rw-r--r-- 1 aba aba  2648 Sep  7 17:37 ft_split.o
+-rw-r--r-- 1 aba aba     3 Sep  7 17:58 infile
+-rw-r--r-- 1 aba aba  1535 Sep  7 19:12 libft_fun.c
+-rw-r--r-- 1 aba aba  1856 Sep  7 19:13 libft_fun.o
+-rw-r--r-- 1 aba aba  1727 Sep  7 21:23 main_fun.c
+-rw-r--r-- 1 aba aba  1392 Sep  7 21:26 main_fun.o
+-rw-r--r-- 1 aba aba   957 Sep  7 21:36 outfile
+-rw-r--r-- 1 aba aba  2054 Sep  7 21:34 pipes.c
+-rw-r--r-- 1 aba aba  2472 Sep  7 21:35 pipes.o
+-rwxr-xr-x 1 aba aba 17192 Sep  7 21:37 pipex
+-rw-r--r-- 1 aba aba  1587 Sep  7 21:33 pipex.h
+-rw-r--r-- 1 aba aba  1711 Sep  7 21:00 r_wr_func.c
+-rw-r--r-- 1 aba aba  1832 Sep  7 21:19 r_wr_func.o
+-rw-r--r-- 1 aba aba  1664 Sep  7 19:25 where_func.c
+-rw-r--r-- 1 aba aba  2800 Sep  7 19:29 where_func.o
