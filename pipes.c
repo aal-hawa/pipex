@@ -6,45 +6,51 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:20:55 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/07 21:34:33 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/08 15:20:47 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void error_pipe(int fd1[2])
+void error_pipe(int *fd1)
 {
 	perror("from pipe");
 	close (fd1[0]);
 	close (fd1[1]);
 }
 
-int	init_fds(int fd1[2])
-{
-	if (pipe(fd1) == -1)
-	{
-		perror("from pipe");
-		return (1);
-	}
-	return (0);
-}
+// int	init_fds(int *fd1)
+// {
+// 	if (pipe(fd1) == -1)
+// 	{
+// 		perror("from pipe");
+// 		return (1);
+// 	}
+// 	return (0);
+// }
 
-char *my_pipe(char **str)
+char *my_pipe(char **str, char *env)
 {
 	int	fd1[2];
 	pid_t	fr;
 	
-	if (init_fds(fd1) == -1)
-		return(error_pipe(fd1), NULL);
+	// if (init_fds(fd1) == -1)
+	// 	return(error_pipe(fd1), NULL);
+	if (pipe(fd1) == -1)
+	{
+		perror("from pipe");
+		return (NULL);
+	}
 	fr = fork();
 	if (fr == -1)
 		return (error_fork(fd1), NULL);
 	if (fr == 0)
 	{
-		child_fork_fun(fd1, str);
+		child_fork_fun(fd1, str, env);
 		return (NULL);
 	}
-	parent_fork_fun(fd1, str);
+	wait(NULL);
+	parent_fork_fun(fd1, str, env);
 	return (NULL);
 }
 

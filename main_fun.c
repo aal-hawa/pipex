@@ -6,20 +6,32 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:35:53 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/07 21:23:14 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/08 14:31:18 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 //./pipex file1 cmd1 cmd2 file2
-int	main(int ac, char **arg)
+int	main(int ac, char **arg, char **envp)
 {
 	// char *res;
-	
+	int i;
+	char *env;
+	i = 0;
+	while (envp[i])
+	{
+		if(ft_strncmp(envp[i], "PATH=", 5) == 0)
+		{
+			env = &envp[i][5];
+			// printf("env:  %s\n", env);
+		}
+		i++;
+	}
+	// access()
 	if (ac  != 5)
 	return (0);
-	my_pipe(arg);
+	my_pipe(arg, env);
 	return (0);
 }
 
