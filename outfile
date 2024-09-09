@@ -1,21 +1,22 @@
-Makefile
-README.md
-forks.c
-forks.o
-ft_split.c
-ft_split.o
-infile
-libft_fun.c
-libft_fun.o
-ls
-main_fun.c
-main_fun.o
-outfile
-pipes.c
-pipes.o
-pipex
-pipex.h
-r_wr_func.c
-r_wr_func.o
-where_func.c
-where_func.o
+total 104
+-rw-r--r-- 1 aba aba   575 Sep  9 18:49 Makefile
+-rw-r--r-- 1 aba aba    31 Sep  7 21:42 README.md
+-rw-r--r-- 1 aba aba  3544 Sep  9 19:00 forks.c
+-rw-r--r-- 1 aba aba  5144 Sep  9 19:00 forks.o
+-rw-r--r-- 1 aba aba  1993 Sep  9 15:37 ft_split.c
+-rw-r--r-- 1 aba aba  2648 Sep  9 18:56 ft_split.o
+-rw-r--r-- 1 aba aba    42 Sep  9 18:45 infile
+-rw-r--r-- 1 aba aba  2215 Sep  9 15:38 libft_fun.c
+-rw-r--r-- 1 aba aba  2544 Sep  9 18:56 libft_fun.o
+-rw-r--r-- 1 aba aba  1163 Sep  9 17:37 main_bonus.c
+-rw-r--r-- 1 aba aba  1712 Sep  9 18:56 main_bonus.o
+-rw-r--r-- 1 aba aba  2146 Sep  9 17:30 main_fun.c
+-rwxr-xr-x 1 aba aba     0 Sep  9 19:00 outfile
+-rw-r--r-- 1 aba aba  1452 Sep  9 18:47 pipes.c
+-rw-r--r-- 1 aba aba  2272 Sep  9 18:56 pipes.o
+-rw-r--r-- 1 aba aba  1713 Sep  9 17:31 pipex.h
+-rwxr-xr-x 1 aba aba 21520 Sep  9 19:00 pipex_b
+-rw-r--r-- 1 aba aba  1667 Sep  9 16:34 r_wr_func.c
+-rw-r--r-- 1 aba aba  1680 Sep  9 18:56 r_wr_func.o
+-rw-r--r-- 1 aba aba  2287 Sep  9 15:40 where_func.c
+-rw-r--r-- 1 aba aba  2080 Sep  9 18:56 where_func.o

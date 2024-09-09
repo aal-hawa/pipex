@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:18:48 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/08 20:00:45 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/09 16:34:03 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,15 @@ int	open_file_r(char *name_file)
 	int	fd;
 	fd = open(name_file, O_RDONLY, 0777);
 	if (fd == -1)
-	{
-		perror("open_file_r");
-		// exit(1);
-	}
+		perror(name_file);
 	return (fd);
 }
 int	open_file_w(char *name_file)
 {
 	int	fd;
-	fd = open(name_file, O_WRONLY, O_CREAT, O_TRUNC,  0777);
+	fd = open(name_file, O_WRONLY | O_CREAT | O_TRUNC,  0777);
 	if (fd == -1)
-	{
-		perror("open_file_r");
-		// exit(1);
-	}
-	// dup2(fd, STDOUT_FILENO);
+		perror(name_file);
 	return (fd);
 }
 // char *read_file(int fd)

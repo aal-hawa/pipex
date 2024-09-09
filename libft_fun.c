@@ -6,21 +6,21 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:58:21 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/08 14:28:19 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/09 20:44:33 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
+// size_t	ft_strlen(const char *s)
+// {
+// 	size_t	i;
 
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
+// 	i = 0;
+// 	while (s[i])
+// 		i++;
+// 	return (i);
+// }
 
 char	*ft_strdup(char *str,char first_split, char last_split)
 {
@@ -69,7 +69,7 @@ int	ft_strncmp(const char *str1, const char *str2, size_t n)
 	return (0);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2, int is_path)
 {
 	size_t	len;
 	char	*dst;
@@ -86,8 +86,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (NULL);
 	while (s1[i])
 		dst[j++] = s1[i++];
-		
-	dst[j++] = '/';
+	if (is_path == 1)
+		dst[j++] = '/';
 	i = 0;
 	while (s2[i])
 		dst[j++] = s2[i++];
