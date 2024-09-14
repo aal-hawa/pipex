@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:24:47 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/09 19:30:19 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/14 16:49:19 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char *get_from_env(char *env, char *str)
 	int i;
 	char **env_split;
 	
+	if (!env)
+		return (NULL);
 	i = 0;
 	env_split = ft_split(env, ':');
 	if (!env_split)
