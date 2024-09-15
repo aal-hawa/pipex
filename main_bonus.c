@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 16:34:49 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/09 17:37:24 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/15 18:33:49 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ int	main(int ac, char **arg, char **envp)
 	}
 	if (ac < 5)
 		return (0);
-	my_pipe(ac, arg, env);
+	my_pipe(ac, arg, env, ac - 3);
 	return (0);
 }

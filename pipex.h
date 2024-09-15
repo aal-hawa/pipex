@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:54:56 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/14 14:34:44 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/15 17:47:18 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int	open_file_w(char *name_file);
 void error_fork(int *fd1);
 void child_fork_fun(int *fd1, char **str, char *env);
 void parent_fork_fun(int ac, int *fd1, char **str, char *env);
-void my_pipe(int ac, char **str, char *env);
+void my_pipe(int ac, char **str, char *env, int str_i);
 int	ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2, int is_path);
 char *get_from_env(char *env, char *str);
-void	child_bonus(int *fd1, char **strs, char *path_commd);
+void	child_bonus(int fd1, char **strs, char *path_commd);
 
 #endif

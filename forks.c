@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:23:17 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/14 16:29:22 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/15 17:47:06 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,12 +110,13 @@ void	child_fork_fun(int *fd1, char **str, char *env)
 }
 
 
-void	child_bonus(int *fd1, char **strs, char *path_commd)
+void	child_bonus(int fd1, char **strs, char *path_commd)
 {
 	// dup2(fd1[0], STDIN_FILENO);
-	dup2(fd1[1], STDOUT_FILENO);
-	close(fd1[0]);
-	close(fd1[1]);
+	//fd1[1]
+	dup2(fd1, STDOUT_FILENO);
+	// close(fd1[0]);
+	close(fd1);
 	execve(path_commd, strs, NULL);
 	perror("child_bonus, execve");
 	free(strs);
