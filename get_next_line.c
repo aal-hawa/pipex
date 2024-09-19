@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:34:01 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/15 18:33:25 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/18 12:56:25 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ char	*els_whl_nxt(char **text_buffer, char *returntext, ssize_t bytesreed)
 	return (returntext);
 }
 
-char	*while_next_line(char **text_buffer, int fd, ssize_t bytesreed)
+char	*while_next_line(char **text_buffer, int fd, ssize_t bytesreed, int *is_done)
 {
 	char	*returntext;
 
-	while (bytesreed > 0)
+	while (1)
 	{
 		returntext = malloc(sizeof(char) * (BUFFER_SIZE + 1));
 		if (!returntext)
@@ -53,25 +53,27 @@ char	*while_next_line(char **text_buffer, int fd, ssize_t bytesreed)
 		if (bytesreed > 0)
 		{
 			returntext[bytesreed] = '\0';
-			*text_buffer = ft_strjoin_g(*text_buffer, returntext);
+			*text_buffer = ft_strjoin_g(*text_buffer, returntext, is_done);
 			returntext = free_char(returntext);
-			returntext = ft_strdup_line(*text_buffer, 1);
-			if (returntext)
+			// returntext = ft_strdup_line(*text_buffer, 1);
+			if (*is_done == 1)
 			{
-				*text_buffer = ft_strdup_after_line(*text_buffer);
+				// *text_buffer = ft_strdup_after_line(*text_buffer);
 				break ;
 			}
 		}
-		else
-			returntext = els_whl_nxt(text_buffer, returntext, bytesreed);
+		// else
+		// 	returntext = els_whl_nxt(text_buffer, returntext, bytesreed);
 	}
-	return (returntext);
+	return (*text_buffer);
 }
 
 char	*get_next_line(int fd)
 {
 	static char	*text_buffer;
 	ssize_t		bytesreed;
+	int		is_done;
+	is_done = 0;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -83,5 +85,5 @@ char	*get_next_line(int fd)
 		text_buffer[0] = '\0';
 	}
 	bytesreed = 1;
-	return (while_next_line(&text_buffer, fd, bytesreed));
+	return (while_next_line(&text_buffer, fd, bytesreed, &is_done));
 }

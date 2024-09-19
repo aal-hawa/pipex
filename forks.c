@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:23:17 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/15 17:47:06 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:31:58 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ void	child_fork_fun(int *fd1, char **str, char *env)
 	char **strs;
 	char *path_commd;
 	
-	if (ft_strncmp(str[1] , "here_doc", 8) == 0)
-	{
-		here_doc(fd1, str, env);
-		return ;
-	}
+	// if (ft_strncmp(str[1] , "here_doc", 8) == 0)
+	// {
+	// 	here_doc(fd1, str, env);
+	// 	return ;
+	// }
 	fd_file = open_file_r(str[1]);
 	if (fd_file == -1)
 	{
@@ -92,6 +92,7 @@ void	child_fork_fun(int *fd1, char **str, char *env)
 		close(fd1[1]);
 		return ;
 	}
+	
 	path_commd = get_from_env(env, strs[0]);
 	if (!path_commd)
 	{

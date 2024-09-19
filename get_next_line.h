@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:35:19 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/09 20:38:22 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:44:13 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 10000
 # endif
 
 char	*get_next_line(int fd);
@@ -26,7 +26,7 @@ size_t	ft_strlen(const char *s);
 size_t	ft_strlen_line(const char *s);
 char	*ft_strdup_line(char *str, int eof);
 char	*ft_strdup_after_line(char *str);
-char	*ft_strjoin_g(char *s1, char *s2);
+char	*ft_strjoin_g(char *s1, char *s2, int *is_done);
 char	*free_char(char *this_string);
 
 #endif

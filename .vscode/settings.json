@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"*.tcc": "c",
-		"wait.h": "c"
+		"wait.h": "c",
+		"sstream": "c"
 	}
 }

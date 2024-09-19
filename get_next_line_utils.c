@@ -6,11 +6,12 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:34:51 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/15 18:33:36 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/18 13:58:01 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "pipex.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -34,7 +35,27 @@ size_t	ft_strlen_line(const char *s)
 	return (i);
 }
 
-char	*ft_strjoin_g(char *s1, char *s2)
+int last_letters(char *str, int *is_done)
+{
+	int len;
+	int i;
+	char d[9];
+	
+	i = 8;
+	len = ft_strlen(str);
+	if (len < i)
+		return (0);
+	d[i] = 0;
+	while(i >= 0)
+		d[i--] = str[len--];
+	fprintf(stderr, "d: %s\n", d);
+	if (ft_strncmp(d, "LIMITER\n", 8) == 0)
+		return (is_done[0] = 1, 1);
+	return (0);
+}
+
+
+char	*ft_strjoin_g(char *s1, char *s2, int *is_done)
 {
 	size_t	len;
 	char	*dst;
@@ -55,7 +76,15 @@ char	*ft_strjoin_g(char *s1, char *s2)
 	while (s2[i])
 		dst[j++] = s2[i++];
 	dst[j] = '\0';
+	// fprintf(stderr, "s1: %s\n", s1);
+	// fprintf(stderr, "s2: %s\n", s2);
+	// fprintf(stderr, "dst: %s\n", dst);
 	free_char(s1);
+	i = 9;
+	if (last_letters(dst, is_done) == 1)
+		while (i-- > 0)
+			dst[j--] = '\0';
+	fprintf(stderr, "no error before here\n");
 	return (dst);
 }
 
