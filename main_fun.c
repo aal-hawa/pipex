@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:35:53 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/15 18:34:37 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/19 18:50:00 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	main(int ac, char **arg, char **envp)
 {
 	int i;
 	char *env;
+	info_t info;
+
 	i = 0;
 	
 	if (!envp)
@@ -34,7 +36,10 @@ int	main(int ac, char **arg, char **envp)
 	}
 	if (ac != 5)
 		return (0);
-	my_pipe(ac, arg, env, ac - 3);
+	info.ac = ac;
+	info.env = env;
+	info.str_i = ac - 3;
+	my_pipe(arg, &info);
 	return (0);
 }
 

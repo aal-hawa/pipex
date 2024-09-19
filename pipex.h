@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:54:56 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/18 14:05:39 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/19 19:01:22 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,19 @@
 #include <sys/wait.h>
 #include "get_next_line.h"
 
+typedef struct	info_l
+{
+	int	i_fds;
+	int	i_childs;
+	int	i_wait;
+	int	fd_file_r;
+	int	fd_file_w;
+	int offset;
+	int ac;
+	int str_i;
+	char *env;
+}	info_t;
+
 size_t	ft_strlen(const char *s);
 char	*ft_strdup(char *str,char first_split, char last_split);
 char	**ft_split(char const *s, char c);
@@ -33,7 +46,7 @@ int	open_file_w(char *name_file);
 void error_fork(int *fd1);
 void child_fork_fun(int *fd1, char **str, char *env);
 void parent_fork_fun(int ac, int *fd1, char **str, char *env);
-void my_pipe(int ac, char **str, char *env, int str_i);
+void my_pipe(char **str, info_t *info);
 int	ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2, int is_path);
 char *get_from_env(char *env, char *str);
