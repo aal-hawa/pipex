@@ -6,23 +6,21 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:58:21 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/18 11:58:34 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:30:49 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*ft_strdup(char *str,char first_split, char last_split)
+char	*ft_strdup(char *str, char first_split, char last_split)
 {
 	char	*dst;
 	size_t	i;
 	size_t	j;
-	size_t	len;
-	int	is_got_f;
+	int		is_got_f;
 
 	is_got_f = 0;
-	len = ft_strlen(str);
-	dst = malloc(sizeof(char) * (len + 1));
+	dst = malloc(sizeof(char) * (ft_strlen(str) + 1));
 	if (!dst)
 		return (NULL);
 	i = 0;
@@ -39,9 +37,7 @@ char	*ft_strdup(char *str,char first_split, char last_split)
 		else
 			i++;
 	}
-	dst[j] = '\0';
-	free(str);
-	return (dst);
+	return (dst[j] = '\0', free(str), dst);
 }
 
 int	ft_strncmp(const char *str1, const char *str2, size_t n)
@@ -97,4 +93,5 @@ void	ft_putstr_fd(char *s, int fd)
 		write(fd, &s[i], 1);
 		i++;
 	}
+	free_char(s);
 }

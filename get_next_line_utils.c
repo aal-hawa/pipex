@@ -6,11 +6,11 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:34:51 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/18 13:58:01 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:38:14 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+// #include "get_next_line.h"
 #include "pipex.h"
 
 size_t	ft_strlen(const char *s)
@@ -23,19 +23,8 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-size_t	ft_strlen_line(const char *s)
-{
-	size_t	i;
 
-	i = 0;
-	while (s[i] && s[i] != '\n')
-		i++;
-	if (s[i] && s[i] == '\n')
-		i++;
-	return (i);
-}
-
-int last_letters(char *str, int *is_done)
+int last_letters(char *str, int *is_done, t_info *info)
 {
 	int len;
 	int i;
@@ -48,14 +37,12 @@ int last_letters(char *str, int *is_done)
 	d[i] = 0;
 	while(i >= 0)
 		d[i--] = str[len--];
-	fprintf(stderr, "d: %s\n", d);
-	if (ft_strncmp(d, "LIMITER\n", 8) == 0)
+	if (ft_strncmp(d, info->limiter, 8) == 0)
 		return (is_done[0] = 1, 1);
 	return (0);
 }
 
-
-char	*ft_strjoin_g(char *s1, char *s2, int *is_done)
+char	*ft_strjoin_g(char *s1, char *s2, int *is_done, t_info *info)
 {
 	size_t	len;
 	char	*dst;
@@ -76,67 +63,9 @@ char	*ft_strjoin_g(char *s1, char *s2, int *is_done)
 	while (s2[i])
 		dst[j++] = s2[i++];
 	dst[j] = '\0';
-	// fprintf(stderr, "s1: %s\n", s1);
-	// fprintf(stderr, "s2: %s\n", s2);
-	// fprintf(stderr, "dst: %s\n", dst);
 	free_char(s1);
-	i = 9;
-	if (last_letters(dst, is_done) == 1)
-		while (i-- > 0)
+	if (last_letters(dst, is_done, info) == 1)
+		while (info->i_limiter-- > 0)
 			dst[j--] = '\0';
-	fprintf(stderr, "no error before here\n");
-	return (dst);
-}
-
-char	*ft_strdup_line(char *str, int eof)
-{
-	char	*dst;
-	size_t	i;
-	size_t	len;
-
-	i = 0;
-	while (str[i] && str[i] != '\n' && eof == 1)
-		i++;
-	if (!str[i] && eof == 1)
-		return (NULL);
-	len = ft_strlen_line(str);
-	dst = malloc(sizeof(char) * (len + 1));
-	if (!dst)
-		return (NULL);
-	i = 0;
-	while (str[i] && str[i] != '\n')
-	{
-		dst[i] = str[i];
-		i++;
-	}
-	if (str[i] && str[i] == '\n')
-		dst[i++] = '\n';
-	dst[i] = '\0';
-	return (dst);
-}
-
-char	*ft_strdup_after_line(char *str)
-{
-	char	*dst;
-	size_t	i;
-	size_t	j;
-	size_t	len;
-
-	if (!str)
-		return (NULL);
-	len = ft_strlen(str) - ft_strlen_line(str);
-	dst = malloc(sizeof(char) * (len + 1));
-	if (!dst)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (str[i] && str[i] != '\n')
-		i++;
-	if (str[i] && str[i] == '\n')
-		i++;
-	while (str[i])
-		dst[j++] = str[i++];
-	dst[j] = '\0';
-	free_char(str);
 	return (dst);
 }

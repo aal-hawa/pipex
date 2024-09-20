@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:18:48 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/18 14:09:28 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:44:49 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,31 @@ int	open_file_r_w(char *name_file)
 		perror(name_file);
 	return (fd);
 }
-// char *read_file(int fd)
-// {
-// 	char *file;
-	
-// 	file = malloc(sizeof(char) * 10000);
-// 	if(read(fd, file, 10000) == -1)
-// 	{
-// 		perror("from read_file, read");
-// 		return (NULL);
-// 	}
-// 	return (file);
-// }
-// int	write_file(char *to_write, int fd)
-// {
-// 	dup2(fd, STDOUT_FILENO);
-// 	close(fd);
-// 	if (write(STDOUT_FILENO, to_write, sizeof(to_write)) == -1)
-// 	{
-// 		perror("from write_file, write");
-// 		return (-1);
-// 	}
-// 	return (0);
-// }
+
+int	init_files(char **str, t_info *info)
+{
+	info->offset = 2;
+	if (ft_strncmp(str[1], "here_doc", 8) == 0)
+	{
+		info->fd_file_r = open_file_r_w("tmp");
+		if (info->fd_file_r == -1)
+			return (3);
+		info->limiter =ft_strjoin(str[2], "\n", 0);
+		info->i_limiter = ft_strlen (info->limiter);
+		ft_putstr_fd(get_next_line(info), info->fd_file_r);
+		info->offset = 3;
+		info->fd_file_w = open_file_w_b(str[info->ac -1]);
+		if (info->fd_file_w == -1)
+			return (error_pipe(NULL, -1, info, NULL), 3);
+	}
+	else
+	{
+		info->fd_file_r = open_file_r(str[1]);
+		if (info->fd_file_r == -1)
+			return (2);
+		info->fd_file_w = open_file_w(str[info->ac -1]);
+		if (info->fd_file_w == -1)
+			return (error_pipe(NULL, -1, info, NULL), 2);
+	}
+	return (info->offset);
+}

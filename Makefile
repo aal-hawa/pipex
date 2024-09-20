@@ -6,8 +6,7 @@ SRC_MAIN = main_fun.c
 SRC_BNS = main_bonus.c 
 
 SRC = ft_split.c libft_fun.c r_wr_func.c pipes.c \
-	forks.c where_func.c  get_next_line.c get_next_line_utils.c 
-
+	pipes_utils.c where_func.c  get_next_line.c get_next_line_utils.c 
 
 OBGS = $(SRC:.c=.o) $(SRC_MAIN:.c=.o)
 

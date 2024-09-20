@@ -6,17 +6,38 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:24:47 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/18 13:33:40 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:31:38 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+void	env_data(char **envp, char **env)
+{
+	int i;
+
+	i = 0;
+	if (!envp)
+		*env = NULL;
+	else
+	{
+		while (envp[i])
+		{
+			if(ft_strncmp(envp[i], "PATH=", 5) == 0)
+			{
+				*env = &envp[i][5];
+				break ;
+			}
+			i++;
+		}
+	}
+}
 
 char *get_from_env(char *env, char *str)
 {
 	int i;
 	char **env_split;
+	char *error_m;
 	
 	if (!env)
 		return (NULL);
@@ -32,13 +53,8 @@ char *get_from_env(char *env, char *str)
 		}
 		i++;
 	}
-	char *error_m = ft_strjoin("zsh: command not found: ", str, 0);
-	i= 0;
-	while (error_m[i])
-	{
-		write(1, &error_m[i], 1);
-		i++;
-	}
+	error_m = ft_strjoin("zsh: command not found: ", str, 0);
+	ft_putstr_fd(error_m, 2);
 	write(2, "\n", 1);
 	return (NULL);
 }

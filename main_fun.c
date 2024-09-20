@@ -6,39 +6,28 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:35:53 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/19 18:50:00 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/20 19:38:14 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
+void init_info_main(int ac, char *env, t_info *info)
+{
+	info->ac = ac;
+	info->env = env;
+	info->str_i = ac - 3;
+}
+
 int	main(int ac, char **arg, char **envp)
 {
-	int i;
 	char *env;
-	info_t info;
+	t_info info;
 
-	i = 0;
-	
-	if (!envp)
-		env = NULL;
-	else
-	{
-		while (envp[i])
-		{
-			if(ft_strncmp(envp[i], "PATH=", 5) == 0)
-			{
-				env = &envp[i][5];
-				break ;
-			}
-			i++;
-		}
-	}
+	env_data(envp, &env);
 	if (ac != 5)
-		return (0);
-	info.ac = ac;
-	info.env = env;
-	info.str_i = ac - 3;
+		return (ft_putstr_fd("Pad argc\n", 2), 0);
+	init_info_main(ac, env, &info);
 	my_pipe(arg, &info);
 	return (0);
 }
