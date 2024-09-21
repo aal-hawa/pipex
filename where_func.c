@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:24:47 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/20 19:31:38 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/21 15:22:33 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char *get_from_env(char *env, char *str)
 		i++;
 	}
 	error_m = ft_strjoin("zsh: command not found: ", str, 0);
-	ft_putstr_fd(error_m, 2);
+	ft_putstr_fd(error_m, 2, 1);
 	write(2, "\n", 1);
 	return (NULL);
 }

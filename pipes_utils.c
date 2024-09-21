@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:32:30 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/20 20:44:33 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/21 17:06:18 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void wait_fun(t_info *info)
 
 void error_pipe(int **fd1, int i, t_info *info, char **strs)
 {
-	perror("from pipe");
+	// perror("from pipe");
 	if (i >=0)
 	{
 		while (i >= 0)
@@ -47,6 +47,7 @@ void error_pipe(int **fd1, int i, t_info *info, char **strs)
 		free(strs);
 		strs = NULL;
 	}
+	exit (1);
 }
 
 void	close_fds_childs(int **fd1, t_info *info)
@@ -72,7 +73,7 @@ void	close_fds_childs(int **fd1, t_info *info)
 void	close_fds_parent(int **fd1, t_info *info)
 {
 	info->i_childs = 0;
-	while(info->i_childs < info->str_i + 1)
+	while(info->i_childs < info->str_i)
 	{
 		close(fd1[info->i_childs][0]);
 		close(fd1[info->i_childs][1]);

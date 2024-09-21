@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:54:56 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/20 20:39:24 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/21 15:50:56 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ typedef struct	s_info
 	char	*env;
 	char	*limiter;
 	int		i_limiter;
+	char	*path_commd;
+	char	**envp;
+	int		is_for_w;
+	int		is_bonus;
 }	t_info;
 
 size_t	ft_strlen(const char *s);
@@ -48,8 +52,6 @@ void my_pipe(char **str, t_info *info);
 int	ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2, int is_path);
 char *get_from_env(char *env, char *str);
-void	child_execve(int fd1, char **strs, char *path_commd);
-void	ft_putstr_fd(char *s, int fd);
 int	open_file_r_w(char *name_file);
 int	open_file_w_b(char *name_file);
 void	env_data(char **envp, char **env);
@@ -61,5 +63,6 @@ void error_pipe(int **fd1, int i, t_info *info, char **strs);
 char	*get_next_line(t_info *info);
 char	*ft_strjoin_g(char *s1, char *s2, int *is_done, t_info *info);
 char	*free_char(char *this_string);
+void	ft_putstr_fd(char *s, int fd, int is_malloc);
 
 #endif

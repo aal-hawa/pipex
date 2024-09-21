@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:58:21 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/20 19:30:49 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/21 15:21:30 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*ft_strjoin(char const *s1, char const *s2, int is_path)
 	return (dst);
 }
 
-void	ft_putstr_fd(char *s, int fd)
+void	ft_putstr_fd(char *s, int fd, int is_malloc)
 {
 	int	i;
 
@@ -93,5 +93,6 @@ void	ft_putstr_fd(char *s, int fd)
 		write(fd, &s[i], 1);
 		i++;
 	}
-	free_char(s);
+	if (is_malloc == 1)
+		free_char(s);
 }

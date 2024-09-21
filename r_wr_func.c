@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:18:48 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/20 19:44:49 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/21 15:52:03 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ int	open_file_r_w(char *name_file)
 int	init_files(char **str, t_info *info)
 {
 	info->offset = 2;
-	if (ft_strncmp(str[1], "here_doc", 8) == 0)
+	if (ft_strncmp(str[1], "here_doc", 8) == 0 && info->is_bonus == 1)
 	{
 		info->fd_file_r = open_file_r_w("tmp");
 		if (info->fd_file_r == -1)
 			return (3);
 		info->limiter =ft_strjoin(str[2], "\n", 0);
 		info->i_limiter = ft_strlen (info->limiter);
-		ft_putstr_fd(get_next_line(info), info->fd_file_r);
+		ft_putstr_fd(get_next_line(info), info->fd_file_r, 1);
 		info->offset = 3;
 		info->fd_file_w = open_file_w_b(str[info->ac -1]);
 		if (info->fd_file_w == -1)
