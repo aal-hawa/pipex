@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:20:55 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/21 17:27:57 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/22 19:14:46 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ void	child_execve(int **fd1, char **strs, pid_t *frs, t_info *info)
 	}
 	else
 	{
+		if (info->fd_file_w == -1)
+		{
+			de_allocate(&fd1, &frs, info->i_childs);
+			free(strs);
+			strs = NULL;
+			exit (1);
+		}
 		dup2(info->fd_file_w, STDOUT_FILENO);
 		close(info->fd_file_w);
 	}
@@ -54,7 +61,8 @@ void	childs(char **str, int **fd1, pid_t *frs, t_info *info)
 	info->path_commd = get_from_env(info->env, strs[0]);
 	if (!info->path_commd)
 		return (error_pipe(fd1, info->i_childs--, info, strs));
-	dup2(fd1[info->i_childs][0], STDIN_FILENO);
+	if (info->i_childs != 0)
+		dup2(fd1[info->i_childs][0], STDIN_FILENO);
 	close(fd1[info->i_childs][0]);
 	if (info->i_childs != info->str_i -1)
 	{
@@ -99,19 +107,19 @@ void	allocate_fds(int ***fd, pid_t **frs, int j)
 }
 
 
-void my_pipe(char **str, t_info *info)
+int	my_pipe(char **str, t_info *info)
 {
 	int		**fd1;
 	pid_t	*frs;
 
 	if (info->str_i <=0)
-		return ;
+		return 1;
 	allocate_fds(&fd1, &frs, info->str_i);
 	info->offset = init_files(str, info);
 	info->i_fds = 0;
 	while (info->i_fds < info->str_i + 1)
 		if (pipe(fd1[info->i_fds++]) == -1)
-			return (error_pipe(fd1, info->i_fds--, info, NULL));
+			return (error_pipe(fd1, info->i_fds--, info, NULL), 1);
 	info->i_childs = 0;
 	while (info->i_childs < info->str_i)
 	{
@@ -123,7 +131,5 @@ void my_pipe(char **str, t_info *info)
 		}
 		info->i_childs++;
 	}
-	close_fds_parent(fd1, info);
-	wait_fun(info);
-	de_allocate(&fd1, &frs, info->i_childs);
+	return (finish_parent(&fd1, &frs, info));
 }

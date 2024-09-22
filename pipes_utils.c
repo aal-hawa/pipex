@@ -6,25 +6,31 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:32:30 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/21 17:06:18 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/22 20:38:47 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void wait_fun(t_info *info)
+int	wait_fun(t_info *info)
 {
+	int	exit_child;
+	int	is_error_127;
+
 	info->i_wait = 0;
+	is_error_127 = 0;
 	while (info->i_wait < info->str_i)
 	{
-		wait(NULL);
+		wait(&exit_child);
+		if (exit_child == 127)
+			is_error_127 = 1;
 		info->i_wait++;
 	}
+	return (is_error_127);
 }
 
 void error_pipe(int **fd1, int i, t_info *info, char **strs)
 {
-	// perror("from pipe");
 	if (i >=0)
 	{
 		while (i >= 0)
@@ -37,10 +43,12 @@ void error_pipe(int **fd1, int i, t_info *info, char **strs)
 	if (info->fd_file_r >= 0)
 	{
 		close (info->fd_file_r);
+		info->fd_file_r = -1;
 	}
 	if (info->fd_file_w >= 0)
 	{
 		close (info->fd_file_w);
+		info->fd_file_w = -1;
 	}
 	if (!strs)
 	{
@@ -63,20 +71,37 @@ void	close_fds_childs(int **fd1, t_info *info)
 			close(fd1[j][1]);
 		j++;
 	}
-	if (info->i_childs == 0)
+	if (info->i_childs == 0 && info->fd_file_r != -1)
 	{
 		dup2(info->fd_file_r, STDIN_FILENO);
-		close(info->fd_file_r); 
+		close(info->fd_file_r);
 	}
 }
 
 void	close_fds_parent(int **fd1, t_info *info)
 {
-	info->i_childs = 0;
-	while(info->i_childs < info->str_i)
+	int	i;
+
+	i = 0;
+	while(i < info->str_i + 1)
 	{
-		close(fd1[info->i_childs][0]);
-		close(fd1[info->i_childs][1]);
-		info->i_childs++;
+		close(fd1[i][0]);
+		close(fd1[i][1]);
+		i++;
 	}
+	if (info->fd_file_r != -1)
+		close(info->fd_file_r);
+	if (info->fd_file_w != -1)
+		close(info->fd_file_w);
+	if (info->limiter != NULL)
+		free_char(info->limiter);
+}
+int	finish_parent(int ***fd, pid_t **frs, t_info *info)
+{
+	int	is_error_127;
+	
+	close_fds_parent(*fd, info);
+	is_error_127 = wait_fun(info);
+	de_allocate(fd, frs, info->i_childs);
+	return (is_error_127);
 }

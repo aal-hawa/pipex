@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:34:51 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/20 19:38:14 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/22 20:23:05 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,14 @@ size_t	ft_strlen(const char *s)
 
 int last_letters(char *str, int *is_done, t_info *info)
 {
-	int len;
-	int i;
-	char d[9];
-	
-	i = 8;
-	len = ft_strlen(str);
-	if (len < i)
+	int j = ft_strlen(str) - info->i_limiter;
+	if (j < 0)
 		return (0);
-	d[i] = 0;
-	while(i >= 0)
-		d[i--] = str[len--];
-	if (ft_strncmp(d, info->limiter, 8) == 0)
-		return (is_done[0] = 1, 1);
+	if (ft_strncmp(&str[j], info->limiter, info->i_limiter) == 0)
+	{
+		if (j == 0 || str[j - 1] == '\n')
+			return (is_done[0] = 1, 1);
+	}
 	return (0);
 }
 

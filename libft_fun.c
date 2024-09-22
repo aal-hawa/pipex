@@ -6,39 +6,11 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:58:21 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/21 15:21:30 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/22 19:08:00 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-char	*ft_strdup(char *str, char first_split, char last_split)
-{
-	char	*dst;
-	size_t	i;
-	size_t	j;
-	int		is_got_f;
-
-	is_got_f = 0;
-	dst = malloc(sizeof(char) * (ft_strlen(str) + 1));
-	if (!dst)
-		return (NULL);
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if ((is_got_f == 1 && str[i] != last_split) || (is_got_f == 0 &&  str[i] == first_split))
-		{
-			is_got_f = 1;
-			dst[j++] = str[i++];
-		}
-		else if (is_got_f == 1 && str[i] == last_split)
-			break;
-		else
-			i++;
-	}
-	return (dst[j] = '\0', free(str), dst);
-}
 
 int	ft_strncmp(const char *str1, const char *str2, size_t n)
 {
