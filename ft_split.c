@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:05:33 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/09 15:37:34 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:49:05 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,25 @@ size_t	count_sub(char const *s, char c)
 
 void	free_split(char **dst, size_t i)
 {
+	if (!dst)
+		return ;
+	fprintf (stderr, "i: %ld\n", i);
 	while (i > 0)
-		free(dst[--i]);
+	{
+		i--;
+		
+		if (dst[i])
+		{
+			fprintf (stderr, "dst[i]: %s\n", dst[i]);
+			free(dst[i]);
+			dst[i] = NULL;
+		}
+	}
 	free(dst);
+	dst = NULL;
 }
 
-int	sub_split(char **dst, char const *s, char c)
+int	sub_split(char **dst, char const *s, char c, t_info *info)
 {
 	size_t	j;
 	size_t	i;
@@ -74,11 +87,12 @@ int	sub_split(char **dst, char const *s, char c)
 		else
 			s++;
 	}
-	dst[i] = NULL;
+	dst[i++] = NULL;
+	info->i_split = i;
 	return (0);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c, t_info *info)
 {
 	char	**dst;
 	size_t	len;
@@ -89,7 +103,7 @@ char	**ft_split(char const *s, char c)
 	dst = (char **)malloc(sizeof(char *) * (len + 1));
 	if (!dst)
 		return (NULL);
-	if (sub_split(dst, s, c) != 0)
+	if (sub_split(dst, s, c, info) != 0)
 		return (NULL);
 	return (dst);
 }

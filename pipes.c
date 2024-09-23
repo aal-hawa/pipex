@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:20:55 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/22 19:14:46 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/23 18:14:02 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,26 @@ void	child_execve(int **fd1, char **strs, pid_t *frs, t_info *info)
 	if (info->is_for_w == 0)
 	{
 		dup2(fd1[info->i_childs + 1][1], STDOUT_FILENO);
-		close(fd1[info->i_childs + 1][1]);
 	}
 	else
 	{
 		if (info->fd_file_w == -1)
 		{
 			de_allocate(&fd1, &frs, info->i_childs);
-			free(strs);
-			strs = NULL;
+			// free_splits(*strs);
+			free_split(strs, info->i_split);
 			exit (1);
 		}
 		dup2(info->fd_file_w, STDOUT_FILENO);
-		close(info->fd_file_w);
 	}
+	close(fd1[info->i_childs + 1][1]);
+	close(info->fd_file_w);
 	execve(info->path_commd, strs, info->envp);
 	perror("child_execve, execve");
 	de_allocate(&fd1, &frs, info->i_childs);
-	free(strs);
-	strs = NULL;
+	// free_splits(*strs);
+	free_split(strs, info->i_split);
+	free_char(info->path_commd);
 	exit (1);
 }
 
@@ -55,25 +56,20 @@ void	childs(char **str, int **fd1, pid_t *frs, t_info *info)
 {
 	char **strs;
 	
-	strs = ft_split(str[info->i_childs + info->offset], ' ');
+	strs = ft_split(str[info->i_childs + info->offset], ' ', info);
 	if (!strs)
-		return (error_pipe(fd1, info->i_childs--, info, NULL));
-	info->path_commd = get_from_env(info->env, strs[0]);
+		return (error_pipe(fd1, -3, info, NULL), de_allocate(&fd1, &frs, info->i_childs), exit (1));//info->i_childs--
+	info->path_commd = get_from_env(info->env, strs[0], info);
 	if (!info->path_commd)
-		return (error_pipe(fd1, info->i_childs--, info, strs));
+		return (error_pipe(fd1, -3, info, strs), de_allocate(&fd1, &frs, info->i_childs), exit (1));
 	if (info->i_childs != 0)
 		dup2(fd1[info->i_childs][0], STDIN_FILENO);
 	close(fd1[info->i_childs][0]);
 	if (info->i_childs != info->str_i -1)
-	{
 		info->is_for_w = 0;
-		child_execve(fd1, strs, frs, info);
-	}
 	else
-	{
 		info->is_for_w = 1;
-		child_execve(fd1, strs,  frs, info);
-	}
+	child_execve(fd1, strs,  frs, info);
 	exit(0);
 }
 
@@ -119,7 +115,7 @@ int	my_pipe(char **str, t_info *info)
 	info->i_fds = 0;
 	while (info->i_fds < info->str_i + 1)
 		if (pipe(fd1[info->i_fds++]) == -1)
-			return (error_pipe(fd1, info->i_fds--, info, NULL), 1);
+			return (error_pipe(fd1, --info->i_fds, info, NULL), exit (1), 1);
 	info->i_childs = 0;
 	while (info->i_childs < info->str_i)
 	{

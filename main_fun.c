@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:35:53 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/22 19:18:27 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:20:38 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void init_info_main(int ac, char *env, char **envp, t_info *info)
 	info->envp = envp;
 	info->is_bonus = 0;
 	info->limiter = NULL;
+	info->i_split = 0;
 
 }
 

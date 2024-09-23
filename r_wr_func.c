@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:18:48 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/22 20:22:02 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/23 12:18:15 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int	init_files(char **str, t_info *info)
 		ft_putstr_fd(get_next_line(info), info->fd_file_r, 1);
 		info->fd_file_w = open_file_w_b(str[info->ac -1]);
 		if (info->fd_file_w == -1)
-			return (error_pipe(NULL, -1, info, NULL), 3);
+			return (error_pipe(NULL, -1, info, NULL), exit (1), 3);
 	}
 	else
 	{
 		info->fd_file_r = open_file_r(str[1]);
 		info->fd_file_w = open_file_w(str[info->ac -1]);
 		if (info->fd_file_w == -1)
-			return (error_pipe(NULL, -1, info, NULL), 2);
+			return (error_pipe(NULL, -1, info, NULL), exit (1), 2);
 	}
 	return (info->offset);
 }

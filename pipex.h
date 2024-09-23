@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:54:56 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/22 19:07:55 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:36:54 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,11 @@ typedef struct	s_info
 	char	**envp;
 	int		is_for_w;
 	int		is_bonus;
+	size_t	i_split;
 }	t_info;
 
 size_t	ft_strlen(const char *s);
-char	**ft_split(char const *s, char c);
+char	**ft_split(char const *s, char c, t_info *info);
 int	open_file_r(char *name_file);
 int	open_file_w(char *name_file);
 int	open_file_r(char *name_file);
@@ -50,7 +51,7 @@ int	open_file_w(char *name_file);
 int my_pipe(char **str, t_info *info);
 int	ft_strncmp(const char *str1, const char *str2, size_t n);
 char	*ft_strjoin(char const *s1, char const *s2, int is_path);
-char *get_from_env(char *env, char *str);
+char *get_from_env(char *env, char *str, t_info *info);
 int	open_file_r_w(char *name_file);
 int	open_file_w_b(char *name_file);
 void	env_data(char **envp, char **env);
@@ -65,5 +66,6 @@ char	*free_char(char *this_string);
 void	ft_putstr_fd(char *s, int fd, int is_malloc);
 int	finish_parent(int ***fd, pid_t **frs, t_info *info);
 void	de_allocate(int ***fd, pid_t **frs, int i);
-
+// void free_splits(char **strs);
+void	free_split(char **dst, size_t i);
 #endif

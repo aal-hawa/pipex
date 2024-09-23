@@ -6,11 +6,30 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:32:30 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/22 20:38:47 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/23 18:01:12 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void free_splits(char **strs)
+{
+	int i;
+
+	if (!strs)
+	{
+		i = 0;
+		while (strs[i])
+		{
+			strs[i] = free_char(strs[i]);
+			i++;
+		}
+		// if (i !=0 )
+		// 	free((void *)strs[i]);
+		free(strs);
+		strs = NULL;
+	}
+}
 
 int	wait_fun(t_info *info)
 {
@@ -31,31 +50,27 @@ int	wait_fun(t_info *info)
 
 void error_pipe(int **fd1, int i, t_info *info, char **strs)
 {
-	if (i >=0)
+	if (i == -3)
 	{
-		while (i >= 0)
-		{
-			close (fd1[i][0]);
-			close (fd1[i][1]);
-			i--;
-		}
+		close(fd1[info->i_childs][0]);
+		close(fd1[info->i_childs + 1][1]);
+	}
+	while (i >= 0)
+	{
+		close (fd1[i][0]);
+		close (fd1[i][1]);
+		i--;
 	}
 	if (info->fd_file_r >= 0)
-	{
 		close (info->fd_file_r);
-		info->fd_file_r = -1;
-	}
 	if (info->fd_file_w >= 0)
-	{
 		close (info->fd_file_w);
-		info->fd_file_w = -1;
-	}
-	if (!strs)
-	{
-		free(strs);
-		strs = NULL;
-	}
-	exit (1);
+	free_splits(strs);
+	// fprintf (stderr, "info->i_split: %ld\n", info->i_split);
+	// free_split(strs, info->i_split);
+	if (info->path_commd)
+		free_char (info->path_commd);
+	// exit (1);
 }
 
 void	close_fds_childs(int **fd1, t_info *info)
@@ -72,10 +87,12 @@ void	close_fds_childs(int **fd1, t_info *info)
 		j++;
 	}
 	if (info->i_childs == 0 && info->fd_file_r != -1)
-	{
 		dup2(info->fd_file_r, STDIN_FILENO);
+	// {
+	// 	close(info->fd_file_r);
+	// }
+	if (info->fd_file_r != -1)
 		close(info->fd_file_r);
-	}
 }
 
 void	close_fds_parent(int **fd1, t_info *info)
@@ -95,6 +112,7 @@ void	close_fds_parent(int **fd1, t_info *info)
 		close(info->fd_file_w);
 	if (info->limiter != NULL)
 		free_char(info->limiter);
+	
 }
 int	finish_parent(int ***fd, pid_t **frs, t_info *info)
 {
