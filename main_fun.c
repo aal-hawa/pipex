@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:35:53 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/23 17:20:38 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:47:40 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void init_info_main(int ac, char *env, char **envp, t_info *info)
 	info->is_bonus = 0;
 	info->limiter = NULL;
 	info->i_split = 0;
-
+	info->path_commd = NULL;
 }
 
 int	main(int ac, char **arg, char **envp)
@@ -29,7 +29,6 @@ int	main(int ac, char **arg, char **envp)
 	char *env;
 	t_info info;
 	int	is_error_127;
-
 	env_data(envp, &env);
 	if (ac != 5)
 		return (ft_putstr_fd("Pad argc\n", 2, 0), 0);

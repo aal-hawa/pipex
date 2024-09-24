@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:32:30 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/23 18:01:12 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:11:32 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void free_splits(char **strs)
 {
 	int i;
 
-	if (!strs)
+	if (strs)
 	{
 		i = 0;
 		while (strs[i])
@@ -24,8 +24,6 @@ void free_splits(char **strs)
 			strs[i] = free_char(strs[i]);
 			i++;
 		}
-		// if (i !=0 )
-		// 	free((void *)strs[i]);
 		free(strs);
 		strs = NULL;
 	}
@@ -41,7 +39,7 @@ int	wait_fun(t_info *info)
 	while (info->i_wait < info->str_i)
 	{
 		wait(&exit_child);
-		if (exit_child == 127)
+		if (exit_child == 127 || exit_child == 256 )
 			is_error_127 = 1;
 		info->i_wait++;
 	}
@@ -65,12 +63,10 @@ void error_pipe(int **fd1, int i, t_info *info, char **strs)
 		close (info->fd_file_r);
 	if (info->fd_file_w >= 0)
 		close (info->fd_file_w);
-	free_splits(strs);
-	// fprintf (stderr, "info->i_split: %ld\n", info->i_split);
-	// free_split(strs, info->i_split);
+	if (strs)
+		free_splits(strs);
 	if (info->path_commd)
 		free_char (info->path_commd);
-	// exit (1);
 }
 
 void	close_fds_childs(int **fd1, t_info *info)
@@ -88,9 +84,6 @@ void	close_fds_childs(int **fd1, t_info *info)
 	}
 	if (info->i_childs == 0 && info->fd_file_r != -1)
 		dup2(info->fd_file_r, STDIN_FILENO);
-	// {
-	// 	close(info->fd_file_r);
-	// }
 	if (info->fd_file_r != -1)
 		close(info->fd_file_r);
 }
@@ -120,6 +113,6 @@ int	finish_parent(int ***fd, pid_t **frs, t_info *info)
 	
 	close_fds_parent(*fd, info);
 	is_error_127 = wait_fun(info);
-	de_allocate(fd, frs, info->i_childs);
+	de_allocate(fd, frs, info->str_i);
 	return (is_error_127);
 }

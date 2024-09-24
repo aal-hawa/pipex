@@ -6,11 +6,10 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:34:51 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/23 16:38:08 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:53:52 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "get_next_line.h"
 #include "pipex.h"
 
 size_t	ft_strlen(const char *s)
@@ -60,7 +59,7 @@ char	*ft_strjoin_g(char *s1, char *s2, int *is_done, t_info *info)
 	dst[j] = '\0';
 	free_char(s1);
 	if (last_letters(dst, is_done, info) == 1)
-		while (info->i_limiter-- > 0)
+		while (info->i_limiter-- >= 0)
 			dst[j--] = '\0';
 	return (dst);
 }

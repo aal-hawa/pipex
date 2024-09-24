@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:24:47 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/23 16:37:45 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:56:55 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ void	env_data(char **envp, char **env)
 	int i;
 
 	i = 0;
-	if (!envp)
-		*env = NULL;
-	else
+	*env = NULL;
+	if (envp)
 	{
 		while (envp[i])
 		{
@@ -50,15 +49,10 @@ char *get_from_env(char *env, char *str, t_info *info)
 	{
 		joined = ft_strjoin(env_split[i], str, 1);
 		if (!access(joined, R_OK))
-		{
-			// free_splits(env_split);
-			free_split(env_split, info->i_split);
-			return (joined);
-		}
+			return (free_split(env_split, info->i_split), joined);
 		free_char(joined);
 		i++;
 	}
-	// free_splits(env_split);
 	free_split(env_split, info->i_split);
 	error_m = ft_strjoin("zsh: command not found: ", str, 0);
 	ft_putstr_fd(error_m, 2, 1);

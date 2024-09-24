@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:05:33 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/23 17:49:05 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/24 17:53:39 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,12 @@ void	free_split(char **dst, size_t i)
 {
 	if (!dst)
 		return ;
-	fprintf (stderr, "i: %ld\n", i);
 	while (i > 0)
 	{
 		i--;
 		
 		if (dst[i])
 		{
-			fprintf (stderr, "dst[i]: %s\n", dst[i]);
 			free(dst[i]);
 			dst[i] = NULL;
 		}

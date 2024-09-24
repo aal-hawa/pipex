@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:54:56 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/23 16:36:54 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:06:13 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char *get_from_env(char *env, char *str, t_info *info);
 int	open_file_r_w(char *name_file);
 int	open_file_w_b(char *name_file);
 void	env_data(char **envp, char **env);
-int	init_files(char **str, t_info *info);
+int	init_files(char **str, int **fd1, pid_t *frs, t_info *info);
 int		 wait_fun(t_info *info);
 void	close_fds_parent(int **fd1, t_info *info);
 void	close_fds_childs(int **fd1, t_info *info);
