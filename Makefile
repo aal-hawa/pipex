@@ -1,6 +1,6 @@
 NAME = pipex
 NAME_BNS = pipex_b
-CC = cc
+CC = cc -g3
 CFLAGS = -Wall -Wextra -Werror 
 SRC_MAIN = main_fun.c 
 SRC_BNS = main_bonus.c 

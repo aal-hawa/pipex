@@ -50,7 +50,6 @@ void	free_split(char **dst, size_t i)
 	while (i > 0)
 	{
 		i--;
-		
 		if (dst[i])
 		{
 			free(dst[i]);

@@ -12,7 +12,7 @@
 
 #include "pipex.h"
 
-void init_info_main(int ac, char *env, char **envp, t_info *info)
+void	init_info_main(int ac, char *env, char **envp, t_info *info)
 {
 	info->ac = ac;
 	info->env = env;
@@ -26,17 +26,16 @@ void init_info_main(int ac, char *env, char **envp, t_info *info)
 
 int	main(int ac, char **arg, char **envp)
 {
-	char *env;
-	t_info info;
-	int	is_error_127;
+	char	*env;
+	t_info	info;
+	int		is_error_127;
+
 	env_data(envp, &env);
 	if (ac != 5)
 		return (ft_putstr_fd("Pad argc\n", 2, 0), 0);
 	init_info_main(ac, env, envp, &info);
 	is_error_127 = my_pipe(arg, &info);
 	if (is_error_127 == 1)
-		exit (127);
+		exit(127);
 	return (0);
 }
-
-

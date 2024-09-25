@@ -22,7 +22,8 @@ char	*free_char(char *this_string)
 	return (NULL);
 }
 
-char	*while_next_line(char **text_buffer, ssize_t bytesreed, int *is_done, t_info *info)
+char	*while_next_line(char **text_buffer, ssize_t bytesreed, int *is_done,
+		t_info *info)
 {
 	char	returntext[2];
 
@@ -32,7 +33,8 @@ char	*while_next_line(char **text_buffer, ssize_t bytesreed, int *is_done, t_inf
 		if (bytesreed > 0)
 		{
 			returntext[bytesreed] = '\0';
-			*text_buffer = ft_strjoin_g(*text_buffer, returntext, is_done, info);
+			*text_buffer = ft_strjoin_g(*text_buffer, returntext, is_done,
+					info);
 			if (*is_done == 1)
 				break ;
 		}
@@ -43,10 +45,10 @@ char	*while_next_line(char **text_buffer, ssize_t bytesreed, int *is_done, t_inf
 char	*get_next_line(t_info *info)
 {
 	char	*text_buffer;
-	ssize_t		bytesreed;
+	ssize_t	bytesreed;
 	int		is_done;
-	is_done = 0;
 
+	is_done = 0;
 	text_buffer = malloc(sizeof(char) * (1));
 	if (!text_buffer)
 		return (NULL);

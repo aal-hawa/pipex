@@ -22,10 +22,11 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-
-int last_letters(char *str, int *is_done, t_info *info)
+int	last_letters(char *str, int *is_done, t_info *info)
 {
-	int j = ft_strlen(str) - info->i_limiter;
+	int	j;
+
+	j = ft_strlen(str) - info->i_limiter;
 	if (j < 0)
 		return (0);
 	if (ft_strncmp(&str[j], info->limiter, info->i_limiter) == 0)
