@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:54:56 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/24 18:06:13 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/25 20:37:35 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ typedef struct s_info
 	int		is_for_w;
 	int		is_bonus;
 	size_t	i_split;
+	int		env_null;
+	// int		dup_stdin;
+	// int		dup_stout;
 }			t_info;
 
 size_t		ft_strlen(const char *s);
@@ -68,4 +71,5 @@ int			finish_parent(int ***fd, pid_t **frs, t_info *info);
 void		de_allocate(int ***fd, pid_t **frs, int i);
 // void free_splits(char **strs);
 void		free_split(char **dst, size_t i);
+void		close_fds(t_info *info);
 #endif

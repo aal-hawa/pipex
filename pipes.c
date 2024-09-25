@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:20:55 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/25 18:27:18 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/25 20:17:51 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	child_execve(int **fd1, char **strs, pid_t *frs, t_info *info)
 		{
 			de_allocate(&fd1, &frs, info->str_i);
 			free_split(strs, info->i_split);
-			exit(1);
+			(close_fds(info)), exit(1);
 		}
 		dup2(info->fd_file_w, STDOUT_FILENO);
 	}
@@ -90,7 +90,7 @@ void	child_execve(int **fd1, char **strs, pid_t *frs, t_info *info)
 	de_allocate(&fd1, &frs, info->str_i);
 	free_split(strs, info->i_split);
 	free_char(info->path_commd);
-	exit(1);
+	(close_fds(info)), exit(1);
 }
 
 void	childs(char **str, int **fd1, pid_t *frs, t_info *info)
@@ -103,11 +103,14 @@ void	childs(char **str, int **fd1, pid_t *frs, t_info *info)
 			de_allocate(&fd1, &frs, info->str_i), exit(1));
 	get_path_command(strs, info);
 	if (!info->path_commd)
-		return (ft_putstr_fd(
-				ft_strjoin("zsh: command not found: ", strs[0], 0), 2, 2),
-			error_pipe(fd1, -3, info, strs),
+	{
+		if (info->env_null == 1)
+			ft_putstr_fd(
+				ft_strjoin("zsh: command not found: ", strs[0], 0), 2, 2);
+		return (error_pipe(fd1, -3, info, strs),
 			de_allocate(&fd1, &frs, info->str_i),
-			exit(127));
+			close_fds(info)), exit(127);
+	}
 	if (info->i_childs != 0)
 		dup2(fd1[info->i_childs][0], STDIN_FILENO);
 	close(fd1[info->i_childs][0]);
@@ -116,22 +119,22 @@ void	childs(char **str, int **fd1, pid_t *frs, t_info *info)
 	else
 		info->is_for_w = 1;
 	child_execve(fd1, strs, frs, info);
-	exit(0);
+	(close_fds(info)), exit(0);
 }
 
-void	allocate_fds(int ***fd, pid_t **frs, int j)
+void	allocate_fds(int ***fd, pid_t **frs, int j, t_info *info)
 {
 	int	i;
 
 	i = 0;
 	*fd = malloc(sizeof(int *) * (j + 1));
 	if (!*fd)
-		exit(1);
+		(close_fds(info)), exit(1);
 	*frs = malloc(sizeof(pid_t) * j);
 	if (!*frs)
 	{
 		free(*fd);
-		exit(1);
+		(close_fds(info)), exit(1);
 	}
 	while (i < j + 1)
 	{
@@ -142,7 +145,7 @@ void	allocate_fds(int ***fd, pid_t **frs, int j)
 				free(fd[0][i]);
 			free(*fd);
 			free(*frs);
-			exit(1);
+			(close_fds(info)), exit(1);
 		}
 		i++;
 	}
@@ -155,13 +158,13 @@ int	my_pipe(char **str, t_info *info)
 
 	if (info->str_i <= 0)
 		return (1);
-	allocate_fds(&fd1, &frs, info->str_i);
+	allocate_fds(&fd1, &frs, info->str_i, info);
 	info->offset = init_files(str, fd1, frs, info);
 	info->i_fds = 0;
 	while (info->i_fds < info->str_i + 1)
 		if (pipe(fd1[info->i_fds++]) == -1)
 			return (error_pipe(fd1, --info->i_fds, info, NULL),
-				de_allocate(&fd1, &frs, info->str_i), exit(1), 1);
+				de_allocate(&fd1, &frs, info->str_i), close_fds(info)), exit(1), 1;
 	info->i_childs = 0;
 	if (info->fd_file_r == -1)
 		info->i_childs = 1;
