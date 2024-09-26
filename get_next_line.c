@@ -6,11 +6,10 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:34:01 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/23 16:39:24 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:53:36 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "get_next_line.h"
 #include "pipex.h"
 
 char	*free_char(char *this_string)

@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:24:47 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/25 19:23:27 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:48:25 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,40 @@ char	*get_from_env(char *env, char *str, t_info *info)
 	free_split(env_split, info->i_split);
 	error_m = ft_strjoin("zsh: command not found: ", str, 0);
 	return (ft_putstr_fd(error_m, 2, 1), write(2, "\n", 1), NULL);
+}
+
+void	get_path_command(char **strs, t_info *info)
+{
+	int		i;
+
+	i = 0;
+	if (strs[0])
+	{
+		while (strs[0][i])
+		{
+			if (strs[0][i] == '.' || strs[0][i] == '/')
+			{
+				info->path_commd = ft_strdup(strs[0]);
+				break ;
+			}
+			i++;
+		}
+		if (!strs[0][i])
+			info->path_commd = get_from_env(info->env, strs[0], info);
+	}
+}
+
+void	de_allocate(int ***fd, pid_t **frs, int i)
+{
+	while (i >= 0)
+	{
+		while (i >= 0)
+			free(fd[0][i--]);
+		free(*fd);
+		free(*frs);
+		*fd = NULL;
+		*frs = NULL;
+	}
 }
 
 int	finish_parent(int ***fd, pid_t **frs, t_info *info)

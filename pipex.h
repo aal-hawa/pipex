@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:54:56 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/25 20:37:35 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:53:22 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
-// #include "get_next_line.h"
 
 typedef struct s_info
 {
@@ -41,8 +40,6 @@ typedef struct s_info
 	int		is_bonus;
 	size_t	i_split;
 	int		env_null;
-	// int		dup_stdin;
-	// int		dup_stout;
 }			t_info;
 
 size_t		ft_strlen(const char *s);
@@ -58,7 +55,7 @@ char		*get_from_env(char *env, char *str, t_info *info);
 int			open_file_r_w(char *name_file);
 int			open_file_w_b(char *name_file);
 void		env_data(char **envp, char **env);
-int			init_files(char **str, int **fd1, pid_t *frs, t_info *info);
+int			init_files(char **str, t_info *info);
 int			wait_fun(t_info *info);
 void		close_fds_parent(int **fd1, t_info *info);
 void		close_fds_childs(int **fd1, t_info *info);
@@ -69,7 +66,8 @@ char		*free_char(char *this_string);
 void		ft_putstr_fd(char *s, int fd, int is_malloc);
 int			finish_parent(int ***fd, pid_t **frs, t_info *info);
 void		de_allocate(int ***fd, pid_t **frs, int i);
-// void free_splits(char **strs);
 void		free_split(char **dst, size_t i);
-void		close_fds(t_info *info);
+char		*ft_strdup(const char *str);
+void		get_path_command(char **strs, t_info *info);
+
 #endif

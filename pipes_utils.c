@@ -6,23 +6,11 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:32:30 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/25 20:38:05 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/26 16:28:02 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	close_fds(t_info *info)
-{
-	// dup2(info->dup_stdin, STDIN_FILENO);
-	// dup2(info->dup_stout, STDOUT_FILENO);
-	// close(info->dup_stdin);
-	// close(info->dup_stout);
-	if (!info)
-		return ;
-	close(0);
-	close(1);
-}
 
 void	free_splits(char **strs)
 {
@@ -84,7 +72,7 @@ void	error_pipe(int **fd1, int i, t_info *info, char **strs)
 void	close_fds_childs(int **fd1, t_info *info)
 {
 	int	j;
-	// int	dup_stdind;
+
 	j = 0;
 	while (j < info->str_i + 1)
 	{
@@ -95,11 +83,7 @@ void	close_fds_childs(int **fd1, t_info *info)
 		j++;
 	}
 	if (info->i_childs == 0 && info->fd_file_r != -1)
-	{
-		// dup_stdind = dup(STDIN_FILENO);
 		dup2(info->fd_file_r, STDIN_FILENO);
-		// close(dup_stdind);
-	}
 	if (info->fd_file_r != -1)
 		close(info->fd_file_r);
 }
@@ -107,7 +91,6 @@ void	close_fds_childs(int **fd1, t_info *info)
 void	close_fds_parent(int **fd1, t_info *info)
 {
 	int	i;
-		
 
 	i = 0;
 	while (i < info->str_i + 1)
