@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:32:30 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/26 16:28:02 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:09:39 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,6 @@ void	free_splits(char **strs)
 		free(strs);
 		strs = NULL;
 	}
-}
-
-int	wait_fun(t_info *info)
-{
-	int	exit_child;
-	int	is_error_127;
-
-	info->i_wait = 0;
-	is_error_127 = 0;
-	while (info->i_wait < info->str_i)
-	{
-		wait(&exit_child);
-		if (exit_child % 255 == 127)
-			is_error_127 = 1;
-		info->i_wait++;
-	}
-	return (is_error_127);
 }
 
 void	error_pipe(int **fd1, int i, t_info *info, char **strs)
@@ -69,40 +52,44 @@ void	error_pipe(int **fd1, int i, t_info *info, char **strs)
 		free_char(info->path_commd);
 }
 
-void	close_fds_childs(int **fd1, t_info *info)
+void	de_allocate(int ***fd, pid_t **frs, int i)
 {
-	int	j;
-
-	j = 0;
-	while (j < info->str_i + 1)
+	while (i >= 0)
 	{
-		if (info->i_childs != j)
-			close(fd1[j][0]);
-		if (info->i_childs + 1 != j)
-			close(fd1[j][1]);
-		j++;
+		while (i >= 0)
+			free(fd[0][i--]);
+		free(*fd);
+		free(*frs);
+		*fd = NULL;
+		*frs = NULL;
 	}
-	if (info->i_childs == 0 && info->fd_file_r != -1)
-		dup2(info->fd_file_r, STDIN_FILENO);
-	if (info->fd_file_r != -1)
-		close(info->fd_file_r);
 }
 
-void	close_fds_parent(int **fd1, t_info *info)
+void	allocate_fds(int ***fd, pid_t **frs, int j)
 {
 	int	i;
 
 	i = 0;
-	while (i < info->str_i + 1)
+	*fd = malloc(sizeof(int *) * (j + 1));
+	if (!*fd)
+		exit(1);
+	*frs = malloc(sizeof(pid_t) * j);
+	if (!*frs)
 	{
-		close(fd1[i][0]);
-		close(fd1[i][1]);
+		free(*fd);
+		exit(1);
+	}
+	while (i < j + 1)
+	{
+		fd[0][i] = malloc(sizeof(int) * (2));
+		if (!fd[0][i])
+		{
+			while (--i >= 0)
+				free(fd[0][i]);
+			free(*fd);
+			free(*frs);
+			exit(1);
+		}
 		i++;
 	}
-	if (info->fd_file_r != -1)
-		close(info->fd_file_r);
-	if (info->fd_file_w != -1)
-		close(info->fd_file_w);
-	if (info->limiter != NULL)
-		free_char(info->limiter);
 }

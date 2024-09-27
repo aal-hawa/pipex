@@ -6,11 +6,21 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:58:21 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/26 16:30:43 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:02:10 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
 
 char	*ft_strdup(const char *str)
 {

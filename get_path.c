@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   where_func.c                                       :+:      :+:    :+:   */
+/*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:24:47 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/26 16:48:25 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:58:27 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ char	*get_from_env(char *env, char *str, t_info *info)
 {
 	int		i;
 	char	**env_split;
-	char	*error_m;
 	char	*joined;
 
 	if (!env)
@@ -49,7 +48,8 @@ char	*get_from_env(char *env, char *str, t_info *info)
 	{
 		joined = ft_strjoin(env_split[i], str, 1);
 		if (!joined)
-			return (ft_strjoin("zsh: command not found: ", str, 0),
+			return (ft_putstr_fd(
+					ft_strjoin("zsh: command not found: ", str, 0), 2, 2),
 				free_split(env_split, info->i_split), NULL);
 		if (!access(joined, R_OK))
 			return (free_split(env_split, info->i_split), joined);
@@ -57,8 +57,8 @@ char	*get_from_env(char *env, char *str, t_info *info)
 		i++;
 	}
 	free_split(env_split, info->i_split);
-	error_m = ft_strjoin("zsh: command not found: ", str, 0);
-	return (ft_putstr_fd(error_m, 2, 1), write(2, "\n", 1), NULL);
+	return (ft_putstr_fd(ft_strjoin("zsh: command not found: ", str, 0), 2, 2),
+		NULL);
 }
 
 void	get_path_command(char **strs, t_info *info)
@@ -80,27 +80,4 @@ void	get_path_command(char **strs, t_info *info)
 		if (!strs[0][i])
 			info->path_commd = get_from_env(info->env, strs[0], info);
 	}
-}
-
-void	de_allocate(int ***fd, pid_t **frs, int i)
-{
-	while (i >= 0)
-	{
-		while (i >= 0)
-			free(fd[0][i--]);
-		free(*fd);
-		free(*frs);
-		*fd = NULL;
-		*frs = NULL;
-	}
-}
-
-int	finish_parent(int ***fd, pid_t **frs, t_info *info)
-{
-	int	is_error_127;
-
-	close_fds_parent(*fd, info);
-	is_error_127 = wait_fun(info);
-	de_allocate(fd, frs, info->str_i);
-	return (is_error_127);
 }

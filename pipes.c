@@ -6,39 +6,29 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:20:55 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/26 17:01:08 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:00:02 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	allocate_fds(int ***fd, pid_t **frs, int j)
+void	close_fds_childs(int **fd1, t_info *info)
 {
-	int	i;
+	int	j;
 
-	i = 0;
-	*fd = malloc(sizeof(int *) * (j + 1));
-	if (!*fd)
-		exit(1);
-	*frs = malloc(sizeof(pid_t) * j);
-	if (!*frs)
+	j = 0;
+	while (j < info->str_i + 1)
 	{
-		free(*fd);
-		exit(1);
+		if (info->i_childs != j)
+			close(fd1[j][0]);
+		if (info->i_childs + 1 != j)
+			close(fd1[j][1]);
+		j++;
 	}
-	while (i < j + 1)
-	{
-		fd[0][i] = malloc(sizeof(int) * (2));
-		if (!fd[0][i])
-		{
-			while (--i >= 0)
-				free(fd[0][i]);
-			free(*fd);
-			free(*frs);
-			exit(1);
-		}
-		i++;
-	}
+	if (info->i_childs == 0 && info->fd_file_r != -1)
+		dup2(info->fd_file_r, STDIN_FILENO);
+	if (info->fd_file_r != -1)
+		close(info->fd_file_r);
 }
 
 void	child_execve(int **fd1, char **strs, pid_t *frs, t_info *info)
@@ -51,7 +41,7 @@ void	child_execve(int **fd1, char **strs, pid_t *frs, t_info *info)
 	if (info->is_for_w == 1)
 		close(info->fd_file_w);
 	execve(info->path_commd, strs, info->envp);
-	perror("child_execve, execve");
+	perror(info->path_commd);
 	de_allocate(&fd1, &frs, info->str_i);
 	free_split(strs, info->i_split);
 	free_char(info->path_commd);

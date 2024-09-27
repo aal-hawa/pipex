@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:54:56 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/26 16:53:22 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/27 18:14:43 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,13 @@ typedef struct s_info
 
 size_t		ft_strlen(const char *s);
 char		**ft_split(char const *s, char c, t_info *info);
-int			open_file_r(char *name_file);
-int			open_file_w(char *name_file);
-int			open_file_r(char *name_file);
 int			open_file_w(char *name_file);
 int			my_pipe(char **str, t_info *info);
 int			ft_strncmp(const char *str1, const char *str2, size_t n);
 char		*ft_strjoin(char const *s1, char const *s2, int is_path);
-char		*get_from_env(char *env, char *str, t_info *info);
-int			open_file_r_w(char *name_file);
 int			open_file_w_b(char *name_file);
 void		env_data(char **envp, char **env);
 int			init_files(char **str, t_info *info);
-int			wait_fun(t_info *info);
-void		close_fds_parent(int **fd1, t_info *info);
-void		close_fds_childs(int **fd1, t_info *info);
 void		error_pipe(int **fd1, int i, t_info *info, char **strs);
 char		*get_next_line(t_info *info);
 char		*ft_strjoin_g(char *s1, char *s2, int *is_done, t_info *info);
@@ -69,5 +61,6 @@ void		de_allocate(int ***fd, pid_t **frs, int i);
 void		free_split(char **dst, size_t i);
 char		*ft_strdup(const char *str);
 void		get_path_command(char **strs, t_info *info);
+void		allocate_fds(int ***fd, pid_t **frs, int j);
 
 #endif

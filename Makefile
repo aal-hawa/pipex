@@ -1,12 +1,12 @@
 NAME = pipex
-NAME_BNS = pipex_b
+NAME_BNS = pipex_bonus
 CC = cc
 CFLAGS = -Wall -Wextra -Werror 
-SRC_MAIN = main_fun.c 
+SRC_MAIN = main_func.c 
 SRC_BNS = main_bonus.c 
 
-SRC = ft_split.c libft_fun.c r_wr_func.c pipes.c \
-	pipes_utils.c where_func.c  get_next_line.c get_next_line_utils.c 
+SRC = ft_split.c libft_func.c r_wr_func.c pipes.c parent_func.c \
+	pipes_utils.c get_path.c  get_next_line.c get_next_line_utils.c 
 
 OBGS = $(SRC:.c=.o) $(SRC_MAIN:.c=.o)
 
@@ -33,4 +33,4 @@ re: fclean all
 
 bonus: $(NAME_BNS)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus 

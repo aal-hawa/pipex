@@ -6,21 +6,11 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 20:34:51 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/24 17:53:52 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/27 17:56:13 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
 
 int	last_letters(char *str, int *is_done, t_info *info)
 {
