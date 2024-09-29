@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 15:05:33 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/27 18:09:16 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/29 14:07:05 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	sub_split(char **dst, char const *s, char c, t_info *info)
 	while (*s)
 	{
 		j = 0;
+		if (i != 0 && ft_strncmp(dst[0], "awk", 3) == 0 && *s == '\'')
+			c = '\'';
 		if (*s != c)
 		{
 			dst[i] = (char *)malloc(sizeof(char) * (len_sub(s, c) + 1));
@@ -84,9 +86,7 @@ int	sub_split(char **dst, char const *s, char c, t_info *info)
 		else
 			s++;
 	}
-	dst[i++] = NULL;
-	info->i_split = i;
-	return (0);
+	return (dst[i++] = NULL, info->i_split = i, 0);
 }
 
 char	**ft_split(char const *s, char c, t_info *info)

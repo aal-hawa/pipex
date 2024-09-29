@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 14:54:56 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/27 18:14:43 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/29 11:29:39 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_info
 	int		is_bonus;
 	size_t	i_split;
 	int		env_null;
+	int		is_exit_one;
 }			t_info;
 
 size_t		ft_strlen(const char *s);

@@ -6,7 +6,7 @@
 /*   By: aal-hawa <aal-hawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/07 19:20:55 by aal-hawa          #+#    #+#             */
-/*   Updated: 2024/09/27 18:00:02 by aal-hawa         ###   ########.fr       */
+/*   Updated: 2024/09/29 11:33:15 by aal-hawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ void	init_childs(char **str, int **fd1, pid_t *frs, t_info *info)
 			else
 				info->fd_file_w = open_file_w_b(str[info->ac - 1]);
 			if (info->fd_file_w == -1)
+			{
+				info->is_exit_one = 1;
 				break ;
+			}
 		}
 		frs[info->i_childs] = fork();
 		if (frs[info->i_childs] == 0)
